@@ -28,7 +28,9 @@ namespace lab_1.Workers
                 list[i].Password = PasswordWorker.Encrypt(list[i].Password, list[i].Login);
             list.Add(profile);
             var serializer = new DataContractJsonSerializer(typeof(List<Profile>));
-            using (var fs = new FileStream($"{Directory.GetCurrentDirectory()}\\profiles.json", FileMode.OpenOrCreate))
+            using (var writer = new StreamWriter($"{Directory.GetCurrentDirectory()}\\profiles.json"))
+                writer.Write(string.Empty);
+            using (var fs = new FileStream($"{Directory.GetCurrentDirectory()}\\profiles.json", FileMode.Open))
             {
                 serializer.WriteObject(fs, list);
             }

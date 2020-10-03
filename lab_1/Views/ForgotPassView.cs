@@ -9,21 +9,35 @@ namespace lab_1.Views
         public void Start()
         {
             Console.WriteLine("Я так понимаю вы забыли свой пароль? \n" +
-                              "Не волнуйтесь. Просто введите секретное слово," +
+                              "Не волнуйтесь. Просто введите секретное слово и ваш логин," +
                               " которое вы вписывали при регистрации \n" +
                               "и вы получите ваш пароль");
 
+            string login = GetTypedLogin();
             string secretWord = GetTypedSecretWord();
-            CheckUserSecretWord(secretWord);
+            CheckUserSecretWordAndLogin(secretWord, login);
         }
 
-        private void CheckUserSecretWord(string secret)
+        private string GetTypedLogin()
+        {
+            Console.WriteLine("Введите ваш логин: ");
+            string login = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(login) || string.IsNullOrEmpty(login))
+            {
+                Console.WriteLine("Введен некорректный логин! Повторите попытку");
+                return GetTypedLogin();
+            }
+
+            return login;
+        }
+
+        private void CheckUserSecretWordAndLogin(string secret, string login)
         {
             var list = FileWorker.GetProfilesFromFile();
-            Profile profile = list.Find(x => x.SecretWord == secret);
+            Profile profile = list.Find(x => x.SecretWord == secret && x.Login == login);
             if (profile == null)
             {
-                Console.WriteLine("Пользователя с таким секретным словом нет!");
+                Console.WriteLine("Пользователя с таким секретным словом и логином нет!");
                 Start();
             }
             else
@@ -34,7 +48,6 @@ namespace lab_1.Views
                 LoginView view = new LoginView();
                 view.Start();
             }
-            Console.WriteLine();
         }
 
         private string GetTypedSecretWord()

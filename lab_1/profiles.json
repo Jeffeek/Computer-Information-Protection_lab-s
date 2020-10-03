@@ -1,14 +1,20 @@
 [
-    {
-        "FullName" : "jjjjj",
-        "Login" : "admin",
-        "Password" : "b0399d2029f64d445bd131ffaa399a42d2f8e7dc",
-        "SecretWord" : "lol4ik"
-    },
-    {
-        "FullName" : "123",
-        "Login" : "admin2",
-        "Password" : "5fa339bbbb1eeaced3b52e54f44576aaf0d77d96",
-        "SecretWord" : "lolad"
-    }
+  {
+    "FullName": "asfdasfaf",
+    "Login": "login",
+    "Password": "3Q4cW4OqYKqTWPVda+yAFQ==",
+    "SecretWord": "pass123"
+  },
+  {
+    "FullName": "asdfgh",
+    "Login": "goodperson",
+    "Password": "nQ2bC/FS0j3QwGAJgtijeg==",
+    "SecretWord": "qwerty"
+  },
+  {
+    "FullName": "Aleksei",
+    "Login": "qaz",
+    "Password": "BCfJE7b9QOCj9iDOxwLDbg==",
+    "SecretWord": "jojo"
+  }
 ]

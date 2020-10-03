@@ -42,7 +42,7 @@ namespace lab_1.Views
                     {
                         Console.WriteLine("Нет такого варианта ответа!");
                         Console.WriteLine("Консоль закроется через 5 секунд");
-                        Thread.Sleep(500);
+                        Thread.Sleep(5000);
                         Process.GetCurrentProcess().CloseMainWindow();
                         break;
                     }
