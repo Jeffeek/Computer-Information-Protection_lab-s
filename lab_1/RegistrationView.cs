@@ -12,21 +12,54 @@ namespace lab_1
         public void Start()
         {
             Console.WriteLine("Введите логин: ");
-            string name = GetTypedLogin();
+            string login = GetTypedLogin();
             Console.WriteLine("Введите пароль: ");
-            string password = GetTypedLogin();
+            string password = GetTypedPassword();
+            password = PasswordEncoding.Encrypt(password, login);
             Console.WriteLine("Введите секретную фразу для восстановления пароля:");
-            string secretPhrase = GetSecretPhrase();
+            string secretPhrase = GetTypedSecretPhrase();
+            Console.WriteLine("Введите ФИО");
+            string fullName = GetTypedFullName();
+            var profile = new Profile()
+            {
+                FullName = fullName,
+                SecretWord = secretPhrase,
+                Password = password,
+                Login = login
+            };
+            FileWorker.AddNewProfile(profile);
+            Console.WriteLine("Новый пользователь добавлен!\nТеперь вы можете войти");
+            var loginView = new LoginView();
+            loginView.Start();
         }
 
-        private string GetSecretPhrase()
+        private string GetTypedPassword()
         {
-            var list = FileDesirializer.GetProfilesFromFile().Select(x => x.SecretWord);
+            string pass = Console.ReadLine();
+            if (String.IsNullOrWhiteSpace(pass) || String.IsNullOrEmpty(pass) || pass.Length < 8)
+            {
+                Console.WriteLine("Возникла ошибка. PS минимум символов для пароля 8 символов");
+                return GetTypedPassword();
+            }
+            return pass;
+        }
+
+        private string GetTypedFullName()
+        {
+            string name = Console.ReadLine();
+            if (String.IsNullOrWhiteSpace(name) || String.IsNullOrEmpty(name))
+                return GetTypedLogin();
+            return name;
+        }
+
+        private string GetTypedSecretPhrase()
+        {
+            var list = FileWorker.GetProfilesFromFile().Select(x => x.SecretWord);
             string phrase = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(phrase) || list.Contains(phrase))
             {
                 Console.WriteLine("Данную секретную фразу использовать нельзя :(\nВведите еще раз:");
-                return GetSecretPhrase();
+                return GetTypedSecretPhrase();
             }
             return phrase;
         }
@@ -34,7 +67,7 @@ namespace lab_1
         private string GetTypedLogin()
         {
             string login = Console.ReadLine();
-            var list = FileDesirializer.GetProfilesFromFile();
+            var list = FileWorker.GetProfilesFromFile();
             if (list.SingleOrDefault(x => x.Login == login) == null)
             {
                 return login;

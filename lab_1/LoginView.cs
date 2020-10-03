@@ -16,6 +16,11 @@ namespace lab_1
             TypePassword(ref pass);
             if (CheckPassword(login, pass))
                 Console.WriteLine("Пользователь успешно вошел в ЧАТ");
+            else
+            {
+                Console.WriteLine("Некорректные данные! Даю еще одну попытку..");
+                Start();
+            }
         }
 
         private void TypePassword(ref string pass)
@@ -36,7 +41,7 @@ namespace lab_1
 
         private bool CheckLogin(string login)
         {
-            var list = FileDesirializer.GetProfilesFromFile();
+            var list = FileWorker.GetProfilesFromFile();
             Profile profile = list.Find(x => x.Login == login);
             if (profile == null)
             {
@@ -49,9 +54,8 @@ namespace lab_1
 
         private bool CheckPassword(string login, string pass)
         {
-            var list = FileDesirializer.GetProfilesFromFile();
-            string encrypted = PasswordEncoding.Encrypt(pass);
-            Profile profile = list.Find(x => x.Login == login && x.Password == encrypted);
+            var list = FileWorker.GetProfilesFromFile();
+            Profile profile = list.Find(x => x.Login == login && x.Password == pass);
             if (profile == null)
             {
                 Console.WriteLine("Такого пользователя нет! Зарегистрировать? y/n");

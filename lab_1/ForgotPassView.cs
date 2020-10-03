@@ -21,7 +21,7 @@ namespace lab_1
 
         private void CheckUserSecretWord(string secret)
         {
-            var list = FileDesirializer.GetProfilesFromFile();
+            var list = FileWorker.GetProfilesFromFile();
             Profile profile = list.Find(x => x.SecretWord == secret);
             if (profile == null)
             {
@@ -44,7 +44,7 @@ namespace lab_1
             Console.WriteLine("Введите секретное слово: ");
             string typed = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(typed))
-                throw new Exception("Некорректное значение!");
+                return GetTypedSecretWord();
             return typed;
         }
     }

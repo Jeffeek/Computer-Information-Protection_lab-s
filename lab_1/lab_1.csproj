@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileDesirializer.cs" />
+    <Compile Include="FileWorker.cs" />
     <Compile Include="ForgotPassView.cs" />
     <Compile Include="IView.cs" />
     <Compile Include="MainView.cs" />
