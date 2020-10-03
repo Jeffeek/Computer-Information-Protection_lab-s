@@ -2,9 +2,9 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace lab_1
+namespace lab_1.Workers
 {
-    public static class PasswordEncoding
+    public static class PasswordWorker
     {
         public static string Encrypt(string input, string hash)
         {

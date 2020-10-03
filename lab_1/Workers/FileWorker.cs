@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Json;
+using lab_1.Models;
 
-namespace lab_1
+namespace lab_1.Workers
 {
     public static class FileWorker
     {
@@ -15,9 +15,8 @@ namespace lab_1
             {
                 list = serializer.ReadObject(fs) as List<Profile>;
             }
-            //if (list?.Count == 0 || list == null) throw new Exception("нет профилей");
-            foreach (var profile in list)
-                profile.Password = PasswordEncoding.Decrypt(profile.Password, profile.Login);
+            for (int i = 0; i < list.Count; i++)
+                list[i].Password = PasswordWorker.Decrypt(list[i].Password, list[i].Login);
 
             return list;
         }
@@ -26,7 +25,7 @@ namespace lab_1
         {
             var list = GetProfilesFromFile();
             for (int i = 0; i < list.Count; i++)
-                list[i].Password = PasswordEncoding.Encrypt(list[i].Password, list[i].Login);
+                list[i].Password = PasswordWorker.Encrypt(list[i].Password, list[i].Login);
             list.Add(profile);
             var serializer = new DataContractJsonSerializer(typeof(List<Profile>));
             using (var fs = new FileStream($"{Directory.GetCurrentDirectory()}\\profiles.json", FileMode.OpenOrCreate))

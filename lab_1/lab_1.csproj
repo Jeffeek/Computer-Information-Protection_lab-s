@@ -47,16 +47,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileWorker.cs" />
-    <Compile Include="ForgotPassView.cs" />
-    <Compile Include="IView.cs" />
-    <Compile Include="MainView.cs" />
-    <Compile Include="PasswordEncoding.cs" />
-    <Compile Include="Profile.cs" />
+    <Compile Include="Workers\FileWorker.cs" />
+    <Compile Include="Views\ForgotPassView.cs" />
+    <Compile Include="Views\IView.cs" />
+    <Compile Include="Views\MainView.cs" />
+    <Compile Include="Workers\PasswordWorker.cs" />
+    <Compile Include="Models\Profile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="LoginView.cs" />
-    <Compile Include="RegistrationView.cs" />
+    <Compile Include="Views\LoginView.cs" />
+    <Compile Include="Views\RegistrationView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

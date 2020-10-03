@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace lab_1
 {
-    interface IView
+    class Workers
     {
-        void Start();
     }
 }

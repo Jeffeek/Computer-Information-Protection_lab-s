@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using lab_1.Models;
+using lab_1.Workers;
 
-namespace lab_1
+namespace lab_1.Views
 {
     class LoginView : IView
     {

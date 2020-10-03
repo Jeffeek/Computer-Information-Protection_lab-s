@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using lab_1.Models;
+using lab_1.Workers;
 
-namespace lab_1
+namespace lab_1.Views
 {
     class RegistrationView : IView
     {
@@ -15,7 +13,7 @@ namespace lab_1
             string login = GetTypedLogin();
             Console.WriteLine("Введите пароль: ");
             string password = GetTypedPassword();
-            password = PasswordEncoding.Encrypt(password, login);
+            password = PasswordWorker.Encrypt(password, login);
             Console.WriteLine("Введите секретную фразу для восстановления пароля:");
             string secretPhrase = GetTypedSecretPhrase();
             Console.WriteLine("Введите ФИО");

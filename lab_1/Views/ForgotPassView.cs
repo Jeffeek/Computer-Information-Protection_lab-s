@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using lab_1.Models;
+using lab_1.Workers;
 
-namespace lab_1
+namespace lab_1.Views
 {
     class ForgotPassView : IView
     {
