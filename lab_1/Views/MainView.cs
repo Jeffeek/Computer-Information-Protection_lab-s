@@ -4,14 +4,14 @@ using System.Threading;
 
 namespace lab_1.Views
 {
-    class MainView
+    class MainView : IView
     {
         private void StartView(IView view)
         {
             view.Start();
         }
 
-        public MainView()
+        public void Start()
         {
             Console.WriteLine("1. Зарегистрироваться");
             Console.WriteLine("2. Войти");

@@ -16,7 +16,7 @@ namespace lab_1.Views
             TypeLogin(ref login);
             Console.WriteLine("Введите пароль: ");
             TypePassword(ref pass);
-            if (CheckPassword(login, pass))
+            if (CheckLoginAndPass(login, pass))
                 Console.WriteLine("Пользователь успешно вошел в ЧАТ");
             else
             {
@@ -54,34 +54,16 @@ namespace lab_1.Views
             return true;
         }
 
-        private bool CheckPassword(string login, string pass)
+        private bool CheckLoginAndPass(string login, string pass)
         {
             var list = FileWorker.GetProfilesFromFile();
             Profile profile = list.Find(x => x.Login == login && x.Password == pass);
             if (profile == null)
             {
-                Console.WriteLine("Такого пользователя нет! Зарегистрировать? y/n");
-                char input = Char.ToLower((char)Console.Read());
-                if (input == 'y')
-                {
-                    var regview = new RegistrationView();
-                    regview.Start();
-                }
-                else if (input == 'n')
-                {
-                    Console.WriteLine("Консоль закроется через 5 секунд");
-                    Thread.Sleep(5000);
-                    Process.GetCurrentProcess().CloseMainWindow();
-                }
-                else
-                {
-                    Console.WriteLine("Неверный ответ!");
-                    Console.WriteLine("Консоль закроется через 5 секунд");
-                    Thread.Sleep(5000);
-                    Process.GetCurrentProcess().CloseMainWindow();
-                }
-
-                return false;
+                Console.WriteLine("А пароль то.. неправильный!");
+                Console.WriteLine("Консоль закроется через 5 секунд");
+                Thread.Sleep(5000);
+                Process.GetCurrentProcess().CloseMainWindow();
             }
 
             return true;

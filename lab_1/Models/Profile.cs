@@ -14,4 +14,4 @@ namespace lab_1.Models
         [DataMember]
         public string SecretWord { get; set; }
     }
-}
+} 

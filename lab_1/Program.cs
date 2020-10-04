@@ -7,7 +7,8 @@ namespace lab_1
     {
         static void Main(string[] args)
         {
-            MainView view = new MainView();
+            IView view = new MainView();
+            view.Start();
             Console.ReadKey();
         }
     }
