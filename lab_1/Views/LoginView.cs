@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using lab_1.Models;
 using lab_1.Workers;
@@ -10,35 +11,42 @@ namespace lab_1.Views
     {
         public void Start()
         {
-            string login = "";
-            string pass = "";
-            Console.WriteLine("Введите логин: ");
-            TypeLogin(ref login);
-            Console.WriteLine("Введите пароль: ");
-            TypePassword(ref pass);
+            var login = TypeLogin();
+            var pass = TypePassword();
             if (CheckLoginAndPass(login, pass))
+            {
+                var list = FileWorker.GetProfilesFromFile();
                 Console.WriteLine("Пользователь успешно вошел в ЧАТ");
+                var newpass = PasswordWorker.GenerateNewPassword();
+                Console.WriteLine($"Ваш пароль для следующего вашего входа: {newpass}");
+                var profile = list.Single(x => x.Login == login);
+                profile.Password = PasswordWorker.Encrypt(newpass, login);
+                FileWorker.RefreshAll(list);
+            }
+                
             else
             {
-                Console.WriteLine("Некорректные данные! Даю еще одну попытку..");
-                Start();
+                //Console.WriteLine("Некорректные данные! Даю еще одну попытку..");
+                //Start();
             }
         }
 
-        private void TypePassword(ref string pass)
+        private string TypePassword()
         {
+            Console.WriteLine("Введите пароль: ");
             string typed = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(typed))
-                Start();
-            pass = typed;
+                return TypePassword();
+            return typed;
         }
 
-        private void TypeLogin(ref string login)
+        private string TypeLogin()
         {
+            Console.WriteLine("Введите логин: ");
             string typed = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(typed) || !CheckLogin(typed))
-                Start();
-            login = typed;
+                return TypeLogin();
+            return typed;
         }
 
         private bool CheckLogin(string login)

@@ -35,5 +35,16 @@ namespace lab_1.Workers
                 serializer.WriteObject(fs, list);
             }
         }
+
+        public static void RefreshAll(List<Profile> list)
+        {
+            var serializer = new DataContractJsonSerializer(typeof(List<Profile>));
+            using (var writer = new StreamWriter($"{Directory.GetCurrentDirectory()}\\profiles.json"))
+                writer.Write(string.Empty);
+            using (var fs = new FileStream($"{Directory.GetCurrentDirectory()}\\profiles.json", FileMode.Open))
+            {
+                serializer.WriteObject(fs, list);
+            }
+        }
     }
 }

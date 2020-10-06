@@ -11,8 +11,8 @@ namespace lab_1.Views
         {
             Console.WriteLine("Введите логин: ");
             string login = GetTypedLogin();
-            Console.WriteLine("Введите пароль: ");
-            string password = GetTypedPassword();
+            string password = PasswordWorker.GenerateNewPassword();
+            Console.WriteLine($"Ваш пароль: {password}");
             password = PasswordWorker.Encrypt(password, login);
             Console.WriteLine("Введите секретную фразу для восстановления пароля:");
             string secretPhrase = GetTypedSecretPhrase();
@@ -25,21 +25,11 @@ namespace lab_1.Views
                 Password = password,
                 Login = login
             };
+
             FileWorker.AddNewProfile(profile);
             Console.WriteLine("Новый пользователь добавлен!\nТеперь вы можете войти");
             var loginView = new LoginView();
             loginView.Start();
-        }
-
-        private string GetTypedPassword()
-        {
-            string pass = Console.ReadLine();
-            if (String.IsNullOrWhiteSpace(pass) || String.IsNullOrEmpty(pass) || pass.Length < 8)
-            {
-                Console.WriteLine("Возникла ошибка. PS минимум символов для пароля 8 символов");
-                return GetTypedPassword();
-            }
-            return pass;
         }
 
         private string GetTypedFullName()
