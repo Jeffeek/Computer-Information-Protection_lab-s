@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace lab_1.Workers
+namespace CIP_lab_1.Workers
 {
     public class RandomPasswordTripleDES
     {

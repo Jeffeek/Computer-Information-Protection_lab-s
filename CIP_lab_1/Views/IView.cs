@@ -1,4 +1,4 @@
-﻿namespace lab_1.Views
+﻿namespace CIP_lab_1.Views
 {
     interface IView
     {

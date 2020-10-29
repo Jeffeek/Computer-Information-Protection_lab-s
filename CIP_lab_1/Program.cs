@@ -1,11 +1,10 @@
 ﻿using System;
-using lab_1.Views;
+using CIP_lab_1.Views;
 
-namespace lab_1
+namespace CIP_lab_1
 {
     class Program
     {
-        
         static void Main(string[] args)
         {
             IView view = new MainView();

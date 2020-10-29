@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using lab_1.Models;
-using lab_1.Workers;
+using CIP_lab_1.Models;
+using CIP_lab_1.Workers;
 
-namespace lab_1.Views
+namespace CIP_lab_1.Views
 {
     class LoginView : IView
     {

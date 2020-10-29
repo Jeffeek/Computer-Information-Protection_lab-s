@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Json;
-using lab_1.Models;
+using CIP_lab_1.Models;
 
-namespace lab_1.Workers
+namespace CIP_lab_1.Workers
 {
     public class ProfilesReader<T> where T : Profile
     {

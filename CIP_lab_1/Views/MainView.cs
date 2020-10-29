@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 
-namespace lab_1.Views
+namespace CIP_lab_1.Views
 {
     class MainView : IView
     {

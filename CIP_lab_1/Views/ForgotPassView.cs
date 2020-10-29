@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using lab_1.Models;
-using lab_1.Workers;
+using CIP_lab_1.Models;
+using CIP_lab_1.Views;
+using CIP_lab_1.Workers;
 
-namespace lab_1.Views
+namespace CIP_lab_1.Views
 {
     class ForgotPassView : IView
     {

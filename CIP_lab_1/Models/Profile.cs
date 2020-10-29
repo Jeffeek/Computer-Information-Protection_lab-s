@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace lab_1.Models
+namespace CIP_lab_1.Models
 {
     [DataContract]
     public class Profile : IEquatable<Profile>
