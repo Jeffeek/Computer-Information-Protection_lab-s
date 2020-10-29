@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using lab_1.Models;
 using lab_1.Workers;
 
@@ -33,8 +35,9 @@ namespace lab_1.Views
 
         private void CheckUserSecretWordAndLogin(string secret, string login)
         {
-            var list = FileWorker.GetProfilesFromFile();
-            Profile profile = list.Find(x => x.SecretWord == secret && x.Login == login);
+            var fileWorker = new FileWorker<Profile>($"{Directory.GetCurrentDirectory()}//profiles.json");
+            var list = fileWorker.Reader.GetProfiles(true);
+            Profile profile = list.SingleOrDefault(x => x.SecretWord == secret && x.Login == login);
             if (profile == null)
             {
                 Console.WriteLine("Пользователя с таким секретным словом и логином нет!");

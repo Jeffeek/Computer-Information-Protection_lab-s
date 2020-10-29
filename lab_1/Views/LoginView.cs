@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using lab_1.Models;
@@ -15,19 +16,15 @@ namespace lab_1.Views
             var pass = TypePassword();
             if (CheckLoginAndPass(login, pass))
             {
-                var list = FileWorker.GetProfilesFromFile();
-                Console.WriteLine("Пользователь успешно вошел в ЧАТ");
-                var newpass = PasswordWorker.GenerateNewPassword();
+                var passwordWorker = new RandomPasswordTripleDES();
+                var fileWorker = new FileWorker<Profile>($"{Directory.GetCurrentDirectory()}//profiles.json");
+                var profilesList = fileWorker.Reader.GetProfiles();
+                var newpass = passwordWorker.GeneratePassword();
                 Console.WriteLine($"Ваш пароль для следующего вашего входа: {newpass}");
-                var profile = list.Single(x => x.Login == login);
-                profile.Password = PasswordWorker.Encrypt(newpass, login);
-                FileWorker.RefreshAll(list);
-            }
-                
-            else
-            {
-                //Console.WriteLine("Некорректные данные! Даю еще одну попытку..");
-                //Start();
+                var profile = profilesList.Single(x => x.Login == login);
+                profile.Password = passwordWorker.Encrypt(newpass, login);
+                fileWorker.Writer.RewriteAll(profilesList);
+                Console.WriteLine("Пользователь успешно вошел в ЧАТ");
             }
         }
 
@@ -51,8 +48,8 @@ namespace lab_1.Views
 
         private bool CheckLogin(string login)
         {
-            var list = FileWorker.GetProfilesFromFile();
-            Profile profile = list.Find(x => x.Login == login);
+            var list = new FileWorker<Profile>($"{Directory.GetCurrentDirectory()}//profiles.json").Reader.GetProfiles();
+            Profile profile = list.SingleOrDefault(x => x.Login == login);
             if (profile == null)
             {
                 Console.WriteLine("Такого логина нет!");
@@ -64,8 +61,8 @@ namespace lab_1.Views
 
         private bool CheckLoginAndPass(string login, string pass)
         {
-            var list = FileWorker.GetProfilesFromFile();
-            Profile profile = list.Find(x => x.Login == login && x.Password == pass);
+            var list = new FileWorker<Profile>($"{Directory.GetCurrentDirectory()}//profiles.json").Reader.GetProfiles(true);
+            Profile profile = list.SingleOrDefault(x => x.Login == login && x.Password == pass);
             if (profile == null)
             {
                 Console.WriteLine("А пароль то.. неправильный!");

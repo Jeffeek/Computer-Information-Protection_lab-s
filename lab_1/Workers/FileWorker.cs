@@ -1,50 +1,37 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using lab_1.Models;
 
 namespace lab_1.Workers
 {
-    public static class FileWorker
+    public class FileWorker<T> where T : Profile
     {
-        public static List<Profile> GetProfilesFromFile()
+        private ProfilesReader<T> _reader;
+        private ProfilesWriter<T> _writer;
+        private string _path;
+        public string Path
         {
-            List<Profile> list = null;
-            var serializer = new DataContractJsonSerializer(typeof(List<Profile>));
-            using (var fs = new FileStream($"{Directory.GetCurrentDirectory()}\\profiles.json", FileMode.OpenOrCreate))
+            get => _path;
+            private set
             {
-                list = serializer.ReadObject(fs) as List<Profile>;
-            }
-            for (int i = 0; i < list.Count; i++)
-                list[i].Password = PasswordWorker.Decrypt(list[i].Password, list[i].Login);
-
-            return list;
-        }
-
-        public static void AddNewProfile(Profile profile)
-        {
-            var list = GetProfilesFromFile();
-            for (int i = 0; i < list.Count; i++)
-                list[i].Password = PasswordWorker.Encrypt(list[i].Password, list[i].Login);
-            list.Add(profile);
-            var serializer = new DataContractJsonSerializer(typeof(List<Profile>));
-            using (var writer = new StreamWriter($"{Directory.GetCurrentDirectory()}\\profiles.json"))
-                writer.Write(string.Empty);
-            using (var fs = new FileStream($"{Directory.GetCurrentDirectory()}\\profiles.json", FileMode.Open))
-            {
-                serializer.WriteObject(fs, list);
+                if (String.IsNullOrEmpty(value)) throw new ArgumentException(nameof(value));
+                if (String.IsNullOrWhiteSpace(value)) throw new ArgumentException(nameof(value));
+                _path = value;
+                _reader.Path = value;
+                _writer.Path = value;
             }
         }
 
-        public static void RefreshAll(List<Profile> list)
+        public ProfilesReader<T> Reader => _reader;
+        public ProfilesWriter<T> Writer => _writer;
+
+        public FileWorker(string path)
         {
-            var serializer = new DataContractJsonSerializer(typeof(List<Profile>));
-            using (var writer = new StreamWriter($"{Directory.GetCurrentDirectory()}\\profiles.json"))
-                writer.Write(string.Empty);
-            using (var fs = new FileStream($"{Directory.GetCurrentDirectory()}\\profiles.json", FileMode.Open))
-            {
-                serializer.WriteObject(fs, list);
-            }
+            _reader = new ProfilesReader<T>();
+            _writer = new ProfilesWriter<T>();
+            Path = path;
         }
     }
 }

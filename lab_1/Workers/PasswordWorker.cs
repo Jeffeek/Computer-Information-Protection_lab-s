@@ -4,23 +4,32 @@ using System.Text;
 
 namespace lab_1.Workers
 {
-    public static class PasswordWorker
+    public class RandomPasswordTripleDES
     {
-        public static string GenerateNewPassword()
+        public static RandomPasswordTripleDES Get()
         {
-            string pass = "";
-            string[] arr = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Z", "b", "c", "d", "f", "g", "h", "j", "k", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "z", "A", "E", "U", "Y", "a", "e", "i", "o", "u", "y" };
+            return new RandomPasswordTripleDES();
+        }
+
+        public string GeneratePassword()
+        {
+            var sb = new StringBuilder();
+            string[] arr =
+            {
+                "1", "2", "3", "4", "5", "6", "7", "8", "9", "B", "C", "D", "F", "G", "H", "J",
+                "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Z", "b", "c", "d",
+                "f", "g", "h", "j", "k", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "z",
+                "A", "E", "U", "Y", "a", "e", "i", "o", "u", "y"
+            };
             Random rnd = new Random();
             var max = rnd.Next(7, 10);
             for (int i = 0; i < max; i++)
-            {
-                pass += arr[rnd.Next(0, 57)];
-            }
+                sb.Append(arr[rnd.Next(0, 57)]);
 
-            return pass;
+            return sb.ToString();
         }
 
-        public static string Encrypt(string input, string hash)
+        public string Encrypt(string input, string hash)
         {
             using (var md5 = new MD5CryptoServiceProvider())
             {
@@ -40,7 +49,7 @@ namespace lab_1.Workers
             }
         }
 
-        public static string Decrypt(string input, string hash)
+        public string Decrypt(string input, string hash)
         {
             using (var md5 = new MD5CryptoServiceProvider())
             {

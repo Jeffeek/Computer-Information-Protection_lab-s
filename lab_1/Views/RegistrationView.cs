@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using lab_1.Models;
 using lab_1.Workers;
@@ -9,11 +10,13 @@ namespace lab_1.Views
     {
         public void Start()
         {
+            var passwordWorker = new RandomPasswordTripleDES();
+            var fileWorker  = new FileWorker<Profile>($"{Directory.GetCurrentDirectory()}//profiles.json");
+            string password = passwordWorker.GeneratePassword();
             Console.WriteLine("Введите логин: ");
             string login = GetTypedLogin();
-            string password = PasswordWorker.GenerateNewPassword();
             Console.WriteLine($"Ваш пароль: {password}");
-            password = PasswordWorker.Encrypt(password, login);
+            password = passwordWorker.Encrypt(password, login);
             Console.WriteLine("Введите секретную фразу для восстановления пароля:");
             string secretPhrase = GetTypedSecretPhrase();
             Console.WriteLine("Введите ФИО");
@@ -26,7 +29,7 @@ namespace lab_1.Views
                 Login = login
             };
 
-            FileWorker.AddNewProfile(profile);
+            fileWorker.Writer.AddNewProfile(profile);
             Console.WriteLine("Новый пользователь добавлен!\nТеперь вы можете войти");
             var loginView = new LoginView();
             loginView.Start();
@@ -42,7 +45,8 @@ namespace lab_1.Views
 
         private string GetTypedSecretPhrase()
         {
-            var list = FileWorker.GetProfilesFromFile().Select(x => x.SecretWord);
+            var fileWorker = new FileWorker<Profile>($"{Directory.GetCurrentDirectory()}//profiles.json");
+            var list = fileWorker.Reader.GetProfiles().Select(x => x.SecretWord);
             string phrase = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(phrase) || list.Contains(phrase))
             {
@@ -54,17 +58,16 @@ namespace lab_1.Views
 
         private string GetTypedLogin()
         {
+            var fileWorker = new FileWorker<Profile>($"{Directory.GetCurrentDirectory()}//profiles.json");
             string login = Console.ReadLine();
-            var list = FileWorker.GetProfilesFromFile();
+            var list = fileWorker.Reader.GetProfiles();
             if (list.SingleOrDefault(x => x.Login == login) == null)
             {
                 return login;
             }
-            else
-            {
-                Console.WriteLine("Такой логин уже существует! Повторите попытку!");
-                return GetTypedLogin();
-            }
+
+            Console.WriteLine("Такой логин уже существует! Повторите попытку!");
+            return GetTypedLogin();
         }
     }
 }
