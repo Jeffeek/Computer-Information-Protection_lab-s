@@ -1,0 +1,80 @@
+﻿<Window
+    x:Class="CIP_lab_2.View.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:CIP_lab_2"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:CIP_lab_2.ViewModel"
+    Title="MainWindow"
+    Width="350"
+    Height="200"
+    ResizeMode="NoResize"
+    mc:Ignorable="d">
+    <Window.DataContext>
+        <vm:MagicSquareWindowViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TextBox
+            Grid.Column="0"
+            Width="130"
+            Height="20"
+            Margin="21,35,21,66"
+            Text="{Binding EncryptText}" />
+        <TextBox
+            Grid.Column="0"
+            Width="130"
+            Height="20"
+            Margin="21,73,21,28"
+            Text="{Binding SecretEncrypt}" />
+        <Button
+            Grid.Column="0"
+            Width="100"
+            Height="20"
+            Margin="0,100,0,0"
+            Command="{Binding EncryptAndSaveCommand}"
+            Content="Crypt and save" />
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Menu
+                Grid.Row="0"
+                Width="60"
+                HorizontalAlignment="Left">
+                <MenuItem FontSize="12" Header="Load file">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding OpenFile}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </MenuItem>
+            </Menu>
+            <TextBlock
+                Grid.Row="1"
+                Margin="47,10,47,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Text="Decrypted text" />
+            <TextBox
+                Grid.Row="1"
+                Width="130"
+                Height="20"
+                Margin="21,31,21,50"
+                Text="{Binding SecretDecrypt}" />
+            <TextBox
+                Grid.Row="1"
+                Width="130"
+                Height="20"
+                Margin="21,56,21,25"
+                IsReadOnly="True"
+                Text="{Binding DecryptText}" />
+        </Grid>
+    </Grid>
+</Window>
