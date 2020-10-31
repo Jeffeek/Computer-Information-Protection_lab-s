@@ -9,24 +9,24 @@ namespace CIP_lab_2.Model
     public class MagicSquare
     {
         private char[,] _square;
-        private string _alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+        private string russianAlphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+        private string englishAlphabet = "abcdefghijklmnopqrstuvwxyz";
+        private string _alphabet;
 
-        public MagicSquare()
+        public MagicSquare(bool isEnglish=false)
         {
             _square = new char[5,5];
+            _alphabet = isEnglish ? englishAlphabet : russianAlphabet;
         }
 
         private char[,] GetSquare(string key)
         {
             var newAlphabet = _alphabet;
-            //удаляем из алфавита все символы которые содержит ключ
             for (int i = 0; i < key.Length; i++)
             {
                 newAlphabet = newAlphabet.Replace(key[i].ToString(), "");
             }
 
-            //добавляем пароль в начало алфавита, а в конец дополнительные знаки
-            //для того чтобы избежать пустых ячеек
             newAlphabet = key + newAlphabet + "0123456789!@#$%^&*)_+-=<>?,.";
 
 
@@ -46,7 +46,6 @@ namespace CIP_lab_2.Model
             return _square;
         }
 
-        //поиск символа в двухмерном массиве
         private bool FindSymbol(char[,] symbolsTable, char symbol, out int column, out int row)
         {
             var l = symbolsTable.GetUpperBound(0) + 1;
@@ -56,7 +55,6 @@ namespace CIP_lab_2.Model
                 {
                     if (symbolsTable[i, j] == symbol)
                     {
-                        //значение найдено
                         row = i;
                         column = j;
                         return true;
@@ -64,7 +62,6 @@ namespace CIP_lab_2.Model
                 }
             }
 
-            //если ничего не нашли
             row = -1;
             column = -1;
             return false;
@@ -98,6 +95,7 @@ namespace CIP_lab_2.Model
         public string Decrypt(string text, string password)
         {
             var outputText = "";
+            password = password.ToLower();
             var square = GetSquare(password);
             var m = text.Length;
             var coordinates = new int[m * 2];

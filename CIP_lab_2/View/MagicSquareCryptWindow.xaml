@@ -8,8 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:CIP_lab_2.ViewModel"
     Title="MainWindow"
-    Width="350"
-    Height="200"
+    Width="450"
+    Height="250"
     ResizeMode="NoResize"
     mc:Ignorable="d">
     <Window.DataContext>
@@ -20,61 +20,99 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TextBox
-            Grid.Column="0"
+        <StackPanel
+            Background="BlueViolet">
+            <ComboBox IsReadOnly="True" SelectedValue="{Binding Language, Mode=TwoWay}" Background="Coral">
+                <ComboBoxItem Content="English" IsSelected="True"/>
+                <ComboBoxItem Content="Русский"/>
+            </ComboBox>
+            <TextBlock
+                FontWeight="Bold"
+                FontSize="18"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Text="Encrypt text" />
+            <TextBlock 
+                Margin="0 20 0 0"
+                Text="Text to encrypt" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Top" FontSize="14" />
+            <TextBox
+            Background="AliceBlue"
             Width="130"
             Height="20"
-            Margin="21,35,21,66"
-            Text="{Binding EncryptText}" />
-        <TextBox
-            Grid.Column="0"
+            Margin="0 10 0 0"
+            Text="{Binding EncryptText, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock 
+            Text="Secret to encrypt" 
+            HorizontalAlignment="Center" 
+            Margin="0 10 0 0"
+            VerticalAlignment="Top" FontSize="14"/>
+            <TextBox
+            Background="AliceBlue"
             Width="130"
             Height="20"
-            Margin="21,73,21,28"
-            Text="{Binding SecretEncrypt}" />
-        <Button
-            Grid.Column="0"
-            Width="100"
-            Height="20"
-            Margin="0,100,0,0"
-            Command="{Binding EncryptAndSaveCommand}"
-            Content="Crypt and save" />
-        <Grid Grid.Column="1">
+            Margin="0 10 0 0"
+            Text="{Binding SecretEncrypt, UpdateSourceTrigger=PropertyChanged}" />
+            <Button
+                Background="Coral"
+                Width="100"
+                Height="20"
+                Margin="0 20 0 0"
+                Command="{Binding EncryptAndSaveCommand}"
+                Content="Crypt and save" />
+        </StackPanel>
+        <GridSplitter Grid.Column="0" Width="3"/>
+        <Grid Grid.Column="1" Background="CornflowerBlue">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.2*" />
+                <RowDefinition Height="0.1*" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Menu
+                Background="Beige"
                 Grid.Row="0"
-                Width="60"
+                Width="110"
                 HorizontalAlignment="Left">
-                <MenuItem FontSize="12" Header="Load file">
+                <MenuItem FontSize="12" Header="Load text from file">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding OpenFile}" />
+                            <i:InvokeCommandAction Command="{Binding OpenFile}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </MenuItem>
             </Menu>
-            <TextBlock
-                Grid.Row="1"
-                Margin="47,10,47,0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Text="Decrypted text" />
-            <TextBox
-                Grid.Row="1"
+            <StackPanel Grid.Row="1">
+                <TextBlock
+                    FontWeight="Bold"
+                    FontSize="18"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Text="Decrypt text" />
+                <TextBlock 
+                    Text="Secret to decrypt" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Top" 
+                    Margin="0 20 0 0"
+                    FontSize="14"/>
+                <TextBox
+                Background="AliceBlue"
+                Margin="0 10 0 0"
                 Width="130"
                 Height="20"
-                Margin="21,31,21,50"
-                Text="{Binding SecretDecrypt}" />
-            <TextBox
-                Grid.Row="1"
+                Text="{Binding SecretDecrypt, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock 
+                Margin="0 10 0 0"
+                Text="Result" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Top" FontSize="14" />
+                <TextBox
+                Margin="0 10 0 0"
                 Width="130"
                 Height="20"
-                Margin="21,56,21,25"
                 IsReadOnly="True"
+                Background="LightGray"
                 Text="{Binding DecryptText}" />
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>
