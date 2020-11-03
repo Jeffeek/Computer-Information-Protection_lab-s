@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CIP_lab_2.Model
+namespace CIP_lab_3.Model
 {
-    public class MagicSquare
+    public class TrisemusAlgorithm
     {
-        private char[,] _square;
         private string russianAlphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
         private string englishAlphabet = "abcdefghijklmnopqrstuvwxyz";
+        private char[,] _square;
+        private string _decryptedText;
+        private string _secretText;
         private string _alphabet;
 
-        public MagicSquare(bool isEnglish = false)
+        public TrisemusAlgorithm( bool isEnglish = false)
         {
-            _square = new char[5,5];
+            _square = new char[4,8];
             _alphabet = isEnglish ? englishAlphabet : russianAlphabet;
         }
 
@@ -27,13 +25,13 @@ namespace CIP_lab_2.Model
                 newAlphabet = newAlphabet.Replace(key[i].ToString(), "");
             }
 
-            newAlphabet = key + newAlphabet + "0123456789!@#$%^&*)_+-=<>?,.";
+            newAlphabet = key + newAlphabet + ",._";
 
 
             var index = 0;
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 8; j++)
                 {
                     if (index < newAlphabet.Length)
                     {
