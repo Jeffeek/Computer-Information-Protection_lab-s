@@ -51,7 +51,7 @@ namespace CIP_lab_3.ViewModel
         private void SaveEncryptedFile()
         {
             bool isEnglish = Language.Contains("English");
-            var magicSquare = new TrisemusAlgorithm(EncryptText, SecretEncrypt, true);
+            var magicSquare = new TrisemusAlgorithm(isEnglish);
             var text = magicSquare.Encrypt(EncryptText, SecretEncrypt);
             using (var writer = new StreamWriter($"{Directory.GetCurrentDirectory()}//CryptedText.txt"))
                 writer.Write(text);
