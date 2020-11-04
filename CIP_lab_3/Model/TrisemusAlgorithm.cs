@@ -31,13 +31,16 @@ namespace CIP_lab_3.Model
             return string.Concat(key.ToLower().Replace(" ", "_").Distinct());
         }
 
+        private string GetNormalizedMessage(string text) => text.ToLower().Replace(" ", "_");
+
         public string Encrypt(string text, string key)
         {
             _columnsCount = (int)Math.Ceiling(Math.Sqrt(text.Length));
             _rowsCount = (int)Math.Ceiling(text.Length / (double)_columnsCount);
-            CheckIsValidTable();
-            CheckIsValidKey(key);
+            //CheckIsValidTable();
             key = GetNormilizedKey(key);
+            CheckIsValidKey(key);
+            text = GetNormalizedMessage(text);
             var table = new char[_rowsCount, _columnsCount];
             for (var i = 0; i < key.Length; i++)
             {
