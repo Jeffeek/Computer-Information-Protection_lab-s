@@ -37,7 +37,7 @@ namespace CIP_lab_3.Model
         {
             _columnsCount = (int)Math.Ceiling(Math.Sqrt(text.Length));
             _rowsCount = (int)Math.Ceiling(text.Length / (double)_columnsCount);
-            //CheckIsValidTable();
+            CheckIsValidTable();
             key = GetNormilizedKey(key);
             CheckIsValidKey(key);
             text = GetNormalizedMessage(text);

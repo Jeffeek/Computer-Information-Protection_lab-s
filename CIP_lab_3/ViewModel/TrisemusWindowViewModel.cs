@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Input;
 using CIP_lab_3.Model;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.Win32;
 
 namespace CIP_lab_3.ViewModel
@@ -61,18 +61,17 @@ namespace CIP_lab_3.ViewModel
 
         private void OnDecryptPressed()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.InitialDirectory = $"{Directory.GetCurrentDirectory()}";
+            OpenFileDialog dialog = new OpenFileDialog {InitialDirectory = $"{Directory.GetCurrentDirectory()}"};
             if (dialog.ShowDialog().Value)
             {
                 string loadFile = dialog.FileName;
                 using (var reader = new StreamReader(loadFile))
                 {
-                    //string text = reader.ReadToEnd();
-                    //bool isEnglish = Language.Contains("English");
-                    //var magicSquare = new TrisemusAlgorithm(isEnglish);
-                    //var decryptedText = magicSquare.Decrypt(text, SecretDecrypt);
-                    //DecryptText = decryptedText;
+                    string text = reader.ReadToEnd();
+                    bool isEnglish = Language.Contains("English");
+                    var trisemus = new TrisemusAlgorithm(isEnglish);
+                    var decryptedText = trisemus.Decrypt(text, SecretDecrypt);
+                    DecryptText = decryptedText;
                 }
             }
         }
@@ -84,7 +83,7 @@ namespace CIP_lab_3.ViewModel
         public TrisemusWindowViewModel()
         {
             OpenFile = new RelayCommand(OnDecryptPressed, CanDecrypt);
-            EncryptAndSaveCommand = new RelayCommand(SaveEncryptedFile, true);
+            EncryptAndSaveCommand = new RelayCommand(SaveEncryptedFile, () => true);
         }
     }
 }
