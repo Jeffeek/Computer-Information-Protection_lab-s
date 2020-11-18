@@ -8,8 +8,8 @@ namespace shitty_trisemus
     {
         static void Main(string[] args)
         {
-            char[] alphabet = "abcdefghijklmnopqrstuvwxyz,.* ".ToUpper().ToCharArray();
-            Console.WriteLine("Count of symbols(with separators): " + alphabet.Length);
+            //char[] alphabet = "abcdefghijklmnopqrstuvwxyz,.* ".ToUpper().ToCharArray();
+            //Console.WriteLine("Count of symbols(with separators): " + alphabet.Length);
             int rows = 0, columns;
             bool isValidTable;
             do

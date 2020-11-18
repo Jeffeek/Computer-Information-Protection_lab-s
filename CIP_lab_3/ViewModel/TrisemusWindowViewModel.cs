@@ -13,10 +13,22 @@ namespace CIP_lab_3.ViewModel
         private string _decryptText = String.Empty;
         private string _secretEncrypt = String.Empty;
         private string _secretDecrypt = String.Empty;
+        private string _countOfColumns = String.Empty;
         private string _language;
+        private int _countOfColumnsInt = 0;
 
         public ICommand OpenFile { get; }
         public ICommand EncryptAndSaveCommand { get; }
+
+        public string CountOfColumns
+        {
+            get => _countOfColumns;
+            set
+            {
+                SetValue(ref _countOfColumns, value);
+                int.TryParse(_countOfColumns, out _countOfColumnsInt);
+            }
+        }
 
         public string EncryptText
         {
@@ -51,8 +63,8 @@ namespace CIP_lab_3.ViewModel
         private void SaveEncryptedFile()
         {
             bool isEnglish = Language.Contains("English");
-            var magicSquare = new TrisemusAlgorithm(isEnglish);
-            var text = magicSquare.Encrypt(EncryptText, SecretEncrypt);
+            var magicSquare = new TrisemusAlgorithm( EncryptText, SecretEncrypt, _countOfColumnsInt, isEnglish);
+            var text = magicSquare.Encrypt();
             using (var writer = new StreamWriter($"{Directory.GetCurrentDirectory()}//CryptedText.txt"))
                 writer.Write(text);
             EncryptText = String.Empty;
@@ -69,8 +81,8 @@ namespace CIP_lab_3.ViewModel
                 {
                     string text = reader.ReadToEnd();
                     bool isEnglish = Language.Contains("English");
-                    var trisemus = new TrisemusAlgorithm(isEnglish);
-                    var decryptedText = trisemus.Decrypt(text, SecretDecrypt);
+                    var trisemus = new TrisemusAlgorithm(text, SecretDecrypt, _countOfColumnsInt, isEnglish);
+                    var decryptedText = trisemus.Decrypt();
                     DecryptText = decryptedText;
                 }
             }
@@ -78,12 +90,14 @@ namespace CIP_lab_3.ViewModel
 
         private bool CanDecrypt() => SecretDecrypt.Length > 0;
 
-        //private bool CanEncryptAndSave() => EncryptText.Length > 0 && SecretEncrypt.Length > 0;
+        private bool CanEncryptAndSave() => EncryptText.Length > 0 &&
+                                            SecretEncrypt.Length > 0 &&
+                                            int.TryParse(CountOfColumns, out _countOfColumnsInt);
 
         public TrisemusWindowViewModel()
         {
             OpenFile = new RelayCommand(OnDecryptPressed, CanDecrypt);
-            EncryptAndSaveCommand = new RelayCommand(SaveEncryptedFile, () => true);
+            EncryptAndSaveCommand = new RelayCommand(SaveEncryptedFile, CanEncryptAndSave);
         }
     }
 }
