@@ -1,9 +1,8 @@
-﻿<Application x:Class="CIP_Lab_5.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:CIP_Lab_5"
-             StartupUri="View/MainWindow.xaml">
-    <Application.Resources>
-         
-    </Application.Resources>
+﻿<Application
+    x:Class="CIP_Lab_5.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:CIP_Lab_5"
+    StartupUri="View/MainWindow.xaml">
+    <Application.Resources />
 </Application>

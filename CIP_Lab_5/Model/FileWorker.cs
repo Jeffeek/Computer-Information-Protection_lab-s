@@ -6,7 +6,7 @@ namespace CIP_Lab_5.Model
 {
     class FileWorker
     {
-        public string Path { get; }
+        public string Path { get; set; }
 
         public FileWorker(string path)
         {
