@@ -84,6 +84,9 @@ namespace CIP_Lab_5.View
 
                     sr.Close();
 
+                    var file = new FileWorker($"Files\\OpenKey.txt");
+                    file.Write($"{p} {q}");
+
                     s = s.ToUpper();
 
                     long n = p * q;
@@ -100,6 +103,9 @@ namespace CIP_Lab_5.View
 
                     textBox_d.Text = d.ToString();
                     textBox_n.Text = n.ToString();
+
+                    file.Path = "Files\\CloseKey.txt";
+                    file.Write($"{d} {n}");
 
                     Process.Start("Files\\Encrypted.txt");
                 }
@@ -203,6 +209,26 @@ namespace CIP_Lab_5.View
             }
 
             return e;
+        }
+
+        private void btnLoadOpen_Click(object sender, RoutedEventArgs e)
+        {
+            var file = new FileWorker($"Files\\OpenKey.txt");
+            var text = file.Read();
+            if (text.Length <= 0) return;
+            var nums = text.Split().Select(long.Parse).ToArray();
+            textBox_q.Text = nums[0].ToString();
+            textBox_p.Text = nums[1].ToString();
+        }
+
+        private void btnLoadClose_Click(object sender, RoutedEventArgs e)
+        {
+            var file = new FileWorker($"Files\\CloseKey.txt");
+            var text = file.Read();
+            if (text.Length <= 0) return;
+            var nums = text.Split().Select(long.Parse).ToArray();
+            textBox_d.Text = nums[0].ToString();
+            textBox_n.Text = nums[1].ToString();
         }
     }
 }
