@@ -26,11 +26,10 @@ namespace CIP_Lab_5.Model
 
         public void Write(string text)
         {
-            using (var fs = new FileStream(Path, FileMode.OpenOrCreate))
-                using (var writer = new StreamWriter(fs))
-                {
-                    writer.Write(text);
-                }
+            using (var writer = new StreamWriter(Path, false))
+            {
+                writer.Write(text);
+            }
         }
     }
 }

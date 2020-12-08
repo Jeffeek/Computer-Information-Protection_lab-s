@@ -4,17 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Numerics;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using CIP_Lab_5.Model;
 
 namespace CIP_Lab_5.View
@@ -36,24 +27,14 @@ namespace CIP_Lab_5.View
 
         private void ButtonDecrypt_Click(object sender, RoutedEventArgs e)
         {
-            if ((textBox_d.Text.Length > 0) && (textBox_n.Text.Length > 0))
+            if (textBox_d.Text.Length > 0 && textBox_n.Text.Length > 0)
             {
                 long d = Convert.ToInt64(textBox_d.Text);
                 long n = Convert.ToInt64(textBox_n.Text);
-
                 List<string> input = new List<string>();
-
-                StreamReader sr = new StreamReader("Files\\Encrypted.txt");
-
-                while (!sr.EndOfStream)
-                {
-                    input.Add(sr.ReadLine());
-                }
-
-                sr.Close();
-
+                FileWorker sr = new FileWorker("Files\\Encrypted.txt");
+                input.AddRange(sr.Read().Replace("\r\n", "\n").Split('\n'));
                 string result = RSA_Dedoce(input, d, n);
-
                 StreamWriter sw = new StreamWriter("Files\\Decrypted.txt");
                 sw.WriteLine(result);
                 sw.Close();
@@ -73,40 +54,21 @@ namespace CIP_Lab_5.View
 
                 if (IsTheNumberSimple(p) && IsTheNumberSimple(q))
                 {
-                    string s = "";
-
-                    StreamReader sr = new StreamReader("Files\\TextToEncrypt.txt");
-
-                    while (!sr.EndOfStream)
-                    {
-                        s += sr.ReadLine();
-                    }
-
-                    sr.Close();
-
-                    var file = new FileWorker($"Files\\OpenKey.txt");
-                    file.Write($"{p} {q}");
-
+                    FileWorker sr = new FileWorker("Files\\TextToEncrypt.txt");
+                    var s = sr.Read();
+                    sr.Path = $"Files\\OpenKey.txt";
+                    sr.Write($"{p} {q}");
                     s = s.ToUpper();
-
                     long n = p * q;
                     long m = (p - 1) * (q - 1);
                     long d = Calculate_d(m);
                     long e_ = Calculate_e(d, m);
-
                     List<string> result = RSA_Endoce(s, e_, n);
-
-                    StreamWriter sw = new StreamWriter("Files\\Encrypted.txt");
-                    foreach (string item in result)
-                        sw.WriteLine(item);
-                    sw.Close();
-
+                    string wr = String.Join(Environment.NewLine, result);
                     textBox_d.Text = d.ToString();
                     textBox_n.Text = n.ToString();
-
-                    file.Path = "Files\\CloseKey.txt";
-                    file.Write($"{d} {n}");
-
+                    sr.Path = "Files\\CloseKey.txt";
+                    sr.Write($"{d} {n}");
                     Process.Start("Files\\Encrypted.txt");
                 }
                 else
@@ -139,17 +101,13 @@ namespace CIP_Lab_5.View
 
             BigInteger bi;
 
+            BigInteger n_ = new BigInteger((int) n);
             for (int i = 0; i < s.Length; i++)
             {
                 int index = Array.IndexOf(characters, s[i]);
-
                 bi = new BigInteger(index);
-                bi = BigInteger.Pow(bi, (int)e);
-
-                BigInteger n_ = new BigInteger((int)n);
-
-                bi = bi % n_;
-
+                bi = BigInteger.Pow(bi, (int) e);
+                bi %= n_;
                 result.Add(bi.ToString());
             }
 
@@ -160,20 +118,14 @@ namespace CIP_Lab_5.View
         private string RSA_Dedoce(List<string> input, long d, long n)
         {
             string result = "";
-
             BigInteger bi;
-
+            BigInteger n_ = new BigInteger((int) n);
             foreach (string item in input)
             {
                 bi = new BigInteger(Convert.ToDouble(item));
-                bi = BigInteger.Pow(bi, (int)d);
-
-                BigInteger n_ = new BigInteger((int)n);
-
-                bi = bi % n_;
-
+                bi = BigInteger.Pow(bi, (int) d);
+                bi %= n_;
                 int index = Convert.ToInt32(bi.ToString());
-
                 result += characters[index].ToString();
             }
 
@@ -225,10 +177,27 @@ namespace CIP_Lab_5.View
         {
             var file = new FileWorker($"Files\\CloseKey.txt");
             var text = file.Read();
-            if (text.Length <= 0) return;
+            if (text.Length == 0) return;
             var nums = text.Split().Select(long.Parse).ToArray();
             textBox_d.Text = nums[0].ToString();
             textBox_n.Text = nums[1].ToString();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            long q = GeneratePrivateKey();
+            textBox_q.Text = q.ToString();
+            long p = GeneratePrivateKey();
+            textBox_p.Text = p.ToString();
+        }
+
+        private long GeneratePrivateKey()
+        {
+            var rnd = new Random(DateTime.Now.Millisecond * DateTime.Now.Second);
+            long random = rnd.Next(100, 300);
+            while (!IsTheNumberSimple(random))
+                random = rnd.Next(100, 300);
+            return random;
         }
     }
 }

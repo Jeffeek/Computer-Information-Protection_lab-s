@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:CIP_Lab_5"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
-    Width="216.057"
+    Width="275.268"
     Height="275.461"
     mc:Ignorable="d">
     <Grid Margin="0,0,-0.4,-0.4">
@@ -20,34 +20,35 @@
         <TextBlock
             Width="149"
             Height="28"
-            Margin="32,105,0,0"
+            Margin="69,107,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             FontSize="20"
             Text="Расшифровать"
             TextWrapping="Wrap" />
-        <Button Margin="69,63,63,157" Content="Load open keys" FontSize="10" Name="btnLoadOpen" Click="btnLoadOpen_Click"/>
+        <Button Margin="62,61,63.4,159.4" Content="Load open keys" FontSize="10" Name="btnLoadOpen" Click="btnLoadOpen_Click"/>
         <Button
-            Width="170"
+            Width="227"
             Height="20"
-            Margin="22,91,0,0"
+            Margin="22,90,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="ButtonCrypt_Click"
             Content="Кнопка" />
         <Button
-            Width="170"
+            Width="227"
             Height="21"
-            Margin="22,212,0,0"
+            Margin="22,213,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="ButtonDecrypt_Click"
             Content="Кнопка2" />
-        <TextBox x:Name="textBox_q" HorizontalAlignment="Left" Height="23" Margin="22,35,0,0" TextWrapping="Wrap" Text="101" VerticalAlignment="Top" Width="53"/>
-        <TextBox x:Name="textBox_p" HorizontalAlignment="Left" Height="23" Margin="139,35,0,0" TextWrapping="Wrap" Text="103" VerticalAlignment="Top" Width="53"/>
-        <TextBox x:Name="textBox_d" HorizontalAlignment="Left" Height="23" Margin="22,140,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53"/>
-        <TextBox x:Name="textBox_n" HorizontalAlignment="Left" Height="23" Margin="139,140,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53"/>
-        <Button Margin="69,168,63,44" Content="Load closed keys" FontSize="10" Name="btnLoadClose" Click="btnLoadClose_Click"/>
+        <TextBox x:Name="textBox_q" HorizontalAlignment="Left" Height="23" Margin="10,35,0,0" TextWrapping="Wrap" Text="101" VerticalAlignment="Top" Width="53" IsReadOnly="True"/>
+        <TextBox x:Name="textBox_p" HorizontalAlignment="Left" Height="23" Margin="204,35,0,0" TextWrapping="Wrap" Text="103" VerticalAlignment="Top" Width="53" IsReadOnly="True"/>
+        <TextBox x:Name="textBox_d" HorizontalAlignment="Left" Height="23" Margin="10,138,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" IsReadOnly="True"/>
+        <TextBox x:Name="textBox_n" HorizontalAlignment="Left" Height="23" Margin="204,140,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" IsReadOnly="True"/>
+        <Button Margin="69,166,63.4,46.4" Content="Load closed keys" FontSize="10" Name="btnLoadClose" Click="btnLoadClose_Click"/>
+        <Button Content="Generate" HorizontalAlignment="Left" Margin="97,38,0,0" VerticalAlignment="Top" Width="74" Click="Button_Click"/>
 
     </Grid>
 </Window>
