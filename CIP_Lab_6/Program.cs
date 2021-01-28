@@ -8,36 +8,31 @@ namespace CIP_Lab_6
 {
     class Program
     {
-	    private static string _toLoadFilePath = Path.Combine(Directory.GetCurrentDirectory(), "from.txt");
+	    //private static string _toLoadFilePath = Path.Combine(Directory.GetCurrentDirectory(), "from.txt");
 	    private static string _toSaveFilePath = Path.Combine(Directory.GetCurrentDirectory(), "to.txt");
-        static async Task Main(string[] args)
-        {
-	        var loaded = File.ReadAllText(_toLoadFilePath); 
-	        Console.WriteLine("Текст для шифровки: ");
-	        Console.WriteLine(loaded);
-	        Console.Write("Шифрование...");
-	        var encrypted = await Crypt(loaded);
-	        Console.WriteLine("Сохранение..");
-	        File.WriteAllBytes(_toSaveFilePath, encrypted.Item1);
-	        Console.WriteLine("Готово!");
-	        await Task.Delay(2000);
-	        Console.Clear();
-	        await Task.Delay(1000); 
-	        Environment.Exit(0);
+	    private static ElGamalManaged ElGamal = new ElGamalManaged();
+	    private static ElGamalParameters Parameters;
+
+	    static void Main(string[] args)
+	    {
+		    Parameters = ElGamal.ExportParameters(true);
+            Console.WriteLine("Текст для шифровки: ");
+            var toEncrypt = Console.ReadLine();
+            Console.Write("Шифрование...");
+            var encrypted = Encrypt(toEncrypt);
+            Console.WriteLine("Готово!");
+            File.WriteAllBytes(_toSaveFilePath, encrypted);
+            Console.WriteLine($"Результат: {Encoding.UTF8.GetString(encrypted)}");
+            Console.Write("Расшифрование...");
+            var decrypted = Decrypt(encrypted);
+            Console.WriteLine("Готово!");
+            Console.WriteLine($"Результат: {Encoding.UTF8.GetString(decrypted)}");
+
+            Console.ReadKey();
         }
 
-        static async Task<(byte[], ElGamalParameters)> Crypt(string value)
-        {
-	        for(int i = 0; i < 10; i++)
-	        {
-		        await Task.Delay(100);
-		        Console.Write('.');
-	        }
-	        var elGamal = new ElGamalManaged();
-	        var settings = elGamal.ExportParameters(true);
-	        Console.Clear();
-	        var encrypted = elGamal.EncryptData(Encoding.UTF8.GetBytes(value));
-	        return (encrypted, settings);
-        }
+	    private static byte[] Encrypt(string value) => ElGamal.EncryptData(Encoding.UTF8.GetBytes(value));
+
+	    private static byte[] Decrypt(byte[] data) => ElGamal.DecryptData(data);
     }
 }
