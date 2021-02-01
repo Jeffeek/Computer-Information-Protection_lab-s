@@ -13,7 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIP_lab_4", "CIP_lab_4\CIP_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIP_Lab_5", "CIP_Lab_5\CIP_Lab_5.csproj", "{AC38E0C6-B9A8-4FD4-860E-0F0AC0482409}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIP_Lab_6", "CIP_Lab_6\CIP_Lab_6.csproj", "{AAA204A5-92B5-4880-BEF2-5EE37AB934C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CIP_Lab_6", "CIP_Lab_6\CIP_Lab_6.csproj", "{AAA204A5-92B5-4880-BEF2-5EE37AB934C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIP_OKR1_Wheatstone", "CIP_OKR1_Wheatstone\CIP_OKR1_Wheatstone.csproj", "{6BE4E356-C630-4236-A720-45F1975FBCE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{AAA204A5-92B5-4880-BEF2-5EE37AB934C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAA204A5-92B5-4880-BEF2-5EE37AB934C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAA204A5-92B5-4880-BEF2-5EE37AB934C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BE4E356-C630-4236-A720-45F1975FBCE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BE4E356-C630-4236-A720-45F1975FBCE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BE4E356-C630-4236-A720-45F1975FBCE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BE4E356-C630-4236-A720-45F1975FBCE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
