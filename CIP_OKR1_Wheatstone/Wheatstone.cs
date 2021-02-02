@@ -8,12 +8,12 @@ namespace CIP_OKR1_Wheatstone
 {
     public class Wheatstone
     {
-        private string _firstKey;
-        private string _secondKey;
-        private char[,] _firstMap;
-        private char[,] _secondMap;
-        private string _alphabet;
-        private int _alphabetFactor;
+        private readonly string _firstKey;
+        private readonly string _secondKey;
+        private readonly char[,] _firstMap;
+        private readonly char[,] _secondMap;
+        private readonly string _alphabet;
+        private readonly int _alphabetFactor;
 
         public Wheatstone(string firstKey, string secondKey, string alphabet = null)
         {
@@ -61,7 +61,7 @@ namespace CIP_OKR1_Wheatstone
         {
             text = text.ToLower();
 
-            var result_text = "";
+            var encryptedResult = "";
 
             if (text.Length % 2 != 0)
                 text += ' ';
@@ -69,7 +69,7 @@ namespace CIP_OKR1_Wheatstone
             var length = text.Length / 2;
             var k = 0;
             var bigram = new char[length, 2];
-            var kripto_bigram = new char[length, 2];
+            var kryptoBigram = new char[length, 2];
 
             for (var i = 0; i < length; i++)
             {
@@ -86,8 +86,8 @@ namespace CIP_OKR1_Wheatstone
                 var cortege1 = FindIndexes(bigram[step, 0], _firstMap);
                 var cortege2 = FindIndexes(bigram[step, 1], _secondMap);
 
-                kripto_bigram[step, 0] = _firstMap[cortege1.Item1, cortege2.Item2];
-                kripto_bigram[step, 1] = _secondMap[cortege2.Item1, cortege1.Item2];
+                kryptoBigram[step, 0] = _firstMap[cortege1.Item1, cortege2.Item2];
+                kryptoBigram[step, 1] = _secondMap[cortege2.Item1, cortege1.Item2];
 
                 step++;
             }
@@ -97,22 +97,22 @@ namespace CIP_OKR1_Wheatstone
             {
                 for (var j = 0; j < 2; j++)
                 {
-                    result_text += kripto_bigram[i, j].ToString();
+                    encryptedResult += kryptoBigram[i, j].ToString();
                 }
             }
 
-            return result_text;
+            return encryptedResult;
         }
 
         public string Decrypt(string text)
         {
-            var result_text = "";
+            var recryptedResult = "";
 
             var length = text.Length / 2;
             var k = 0;
 
             var bigram = new char[length, 2];
-            var kripto_bigram = new char[length, 2];
+            var cryptoBigram = new char[length, 2];
 
             for (var i = 0; i < length; i++)
             {
@@ -129,8 +129,8 @@ namespace CIP_OKR1_Wheatstone
                 var cortege1 = FindIndexes(bigram[step, 0], _firstMap);
                 var cortege2 = FindIndexes(bigram[step, 1], _secondMap);
 
-                kripto_bigram[step, 0] = _firstMap[cortege1.Item1, cortege2.Item2];
-                kripto_bigram[step, 1] = _secondMap[cortege2.Item1, cortege1.Item2];
+                cryptoBigram[step, 0] = _firstMap[cortege1.Item1, cortege2.Item2];
+                cryptoBigram[step, 1] = _secondMap[cortege2.Item1, cortege1.Item2];
 
                 step++;
             }
@@ -140,12 +140,12 @@ namespace CIP_OKR1_Wheatstone
             {
                 for (var j = 0; j < 2; j++)
                 {
-                    result_text += kripto_bigram[i, j].ToString();
+                    recryptedResult += cryptoBigram[i, j].ToString();
                 }
             }
 
 
-            return result_text;
+            return recryptedResult;
         }
 
         private (int, int) FindIndexes(char symbol, char[,] matrix)

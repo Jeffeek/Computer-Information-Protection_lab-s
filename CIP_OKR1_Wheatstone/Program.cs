@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace CIP_OKR1_Wheatstone
 {
@@ -6,10 +7,12 @@ namespace CIP_OKR1_Wheatstone
 	{
 		static void Main(string[] args)
 		{
-			var cypher = new Wheatstone("а вот и нет", "хахахахаа, а вот и шифр");
-			var toEncrypt = "я бы бы не было да было..";
+			var cypher = new Wheatstone("первыйноне последний ключ", "ахаххахадаэтоключ круто");
+			var toEncrypt = "я бы бы не было да было.. а кабы было то было бы то да, но нет";
 			var result = cypher.Encrypt(toEncrypt);
+			Console.WriteLine(result);
 			var decryptResult = cypher.Decrypt(result);
+			Console.WriteLine(decryptResult);
 		}
 	}
 }
