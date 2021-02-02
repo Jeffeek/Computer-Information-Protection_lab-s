@@ -7,8 +7,8 @@ namespace CIP_OKR1_Wheatstone
 	{
 		static void Main(string[] args)
 		{
-			var cypher = new Wheatstone("первыйноне последний ключ", "ахаххахадаэтоключ круто");
-			var toEncrypt = "я бы бы не было да было.. а кабы было то было бы то да, но нет";
+			var cypher = new Wheatstone("первый", "второй");
+			var toEncrypt = "я кабы не было да было.. а кабы было то было бы то да, но нет";
 			var result = cypher.Encrypt(toEncrypt);
 			Console.WriteLine(result);
 			var decryptResult = cypher.Decrypt(result);

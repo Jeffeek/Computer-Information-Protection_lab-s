@@ -86,6 +86,16 @@ namespace CIP_OKR1_Wheatstone
                 var cortege1 = FindIndexes(bigram[step, 0], _firstMap);
                 var cortege2 = FindIndexes(bigram[step, 1], _secondMap);
 
+                if (cortege1.Item2 == cortege2.Item2)
+                {
+                    cortege1.Item2++;
+                    cortege2.Item2++;
+                    if (cortege1.Item2 == _alphabetFactor)
+                        cortege1.Item2 = 0;
+                    if (cortege2.Item2 == _alphabetFactor)
+                        cortege2.Item2 = 0;
+                }
+
                 kryptoBigram[step, 0] = _firstMap[cortege1.Item1, cortege2.Item2];
                 kryptoBigram[step, 1] = _secondMap[cortege2.Item1, cortege1.Item2];
 
@@ -128,6 +138,16 @@ namespace CIP_OKR1_Wheatstone
             {
                 var cortege1 = FindIndexes(bigram[step, 0], _firstMap);
                 var cortege2 = FindIndexes(bigram[step, 1], _secondMap);
+
+                if (cortege1.Item2 == cortege2.Item2)
+                {
+                    cortege1.Item2--;
+                    cortege2.Item2--;
+                    if (cortege1.Item2 == -1)
+                        cortege1.Item2 = _alphabetFactor - 1;
+                    if (cortege2.Item2 == -1)
+                        cortege2.Item2 = _alphabetFactor - 1;
+                }
 
                 cryptoBigram[step, 0] = _firstMap[cortege1.Item1, cortege2.Item2];
                 cryptoBigram[step, 1] = _secondMap[cortege2.Item1, cortege1.Item2];
