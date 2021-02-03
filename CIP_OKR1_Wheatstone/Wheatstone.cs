@@ -86,7 +86,7 @@ namespace CIP_OKR1_Wheatstone
                 var cortege1 = FindIndexes(bigram[step, 0], _firstMap);
                 var cortege2 = FindIndexes(bigram[step, 1], _secondMap);
 
-                if (cortege1.Item2 == cortege2.Item2)
+                if (cortege1.Item1 == cortege2.Item1)
                 {
                     cortege1.Item2++;
                     cortege2.Item2++;
@@ -139,7 +139,7 @@ namespace CIP_OKR1_Wheatstone
                 var cortege1 = FindIndexes(bigram[step, 0], _firstMap);
                 var cortege2 = FindIndexes(bigram[step, 1], _secondMap);
 
-                if (cortege1.Item2 == cortege2.Item2)
+                if (cortege1.Item1 == cortege2.Item1)
                 {
                     cortege1.Item2--;
                     cortege2.Item2--;
